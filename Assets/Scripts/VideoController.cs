@@ -21,6 +21,8 @@ public class VideoController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		current_video_id = MoveScene.initial_video_id;
+
 		mediaPlayer = mediaPlayerObj.GetComponent<MediaPlayer> ();
 		mediaPlayer.OpenVideoFromFile(MediaPlayer.FileLocation.AbsolutePathOrURL,BASE_URL + video_files[current_video_id]);
 		moveImage.GetComponent<Image> ().sprite = sprites [current_video_id];
