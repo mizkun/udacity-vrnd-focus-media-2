@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using RenderHeads.Media.AVProVideo;
+using UnityEngine.SceneManagement;
 
 public class VideoController : MonoBehaviour {
 	const string BASE_URL = "https://storage.googleapis.com/vrnd-360-media.appspot.com/";
@@ -19,6 +20,9 @@ public class VideoController : MonoBehaviour {
 	public GameObject particle;
 	public GameObject moveImage;
 
+	public AudioSource seMove;
+	public AudioSource sePlayPause;
+
 	// Use this for initialization
 	void Start () {
 		current_video_id = MoveScene.initial_video_id;
@@ -32,12 +36,13 @@ public class VideoController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (mediaPlayer.Control.IsFinished ()) {
-			
+			SceneManager.LoadScene ("End");
 		}
 	}
 
 	public void PlayVideo () {
-		mediaPlayer.Play();
+		sePlayPause.Play ();
+		mediaPlayer.Play ();
 		playButton.SetActive (false);
 		pauseButton.SetActive (true);
 		moveButton.SetActive (false);
@@ -45,7 +50,8 @@ public class VideoController : MonoBehaviour {
 	}
 
 	public void PauseVideo () {
-		mediaPlayer.Pause();
+		sePlayPause.Play ();
+		mediaPlayer.Pause ();
 		playButton.SetActive (true);
 		pauseButton.SetActive (false);
 		moveButton.SetActive (true);
@@ -53,11 +59,10 @@ public class VideoController : MonoBehaviour {
 	}
 
 	public void MoveVideo () {
+		seMove.Play ();
 		current_video_id = Mathf.Abs (current_video_id - 1);
 		mediaPlayer.OpenVideoFromFile(MediaPlayer.FileLocation.AbsolutePathOrURL,BASE_URL + video_files[current_video_id], true);
-
 		moveImage.GetComponent<Image> ().sprite = sprites [current_video_id];
-
 		playButton.SetActive (false);
 		pauseButton.SetActive (true);
 		moveButton.SetActive (false);

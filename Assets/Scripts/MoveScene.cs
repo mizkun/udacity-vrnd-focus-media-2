@@ -21,6 +21,10 @@ public class MoveScene : MonoBehaviour {
 		SceneManager.LoadScene ("Main");
 	}
 
+	public void MoveToStart () {
+		SceneManager.LoadScene ("Start");
+	}
+
 	public void hoge (){
 	}
 }
